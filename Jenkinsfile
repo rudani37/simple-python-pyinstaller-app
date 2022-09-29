@@ -10,11 +10,8 @@ node {
         }
     }
     stage('Deliver') {
-        docker.environment(
-            VOLUME = '$(pwd)/sources:/src'
-            IMAGE = 'cdrx/pyinstaller-linux:python2'
-        ).inside{
-           sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"  
+        docker.image('qnib/pytest').inside {
+            sh "docker run --rm -v '$(pwd)/sources:/src' 'cdrx/pyinstaller-linux:python2' 'pyinstaller -F add2vals.py'"
         }
     }
 }
