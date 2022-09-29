@@ -10,8 +10,17 @@ node {
         }
     }
     stage('Deliver') {
-        docker.image('qnib/pytest').inside {
-            sh "docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py'"
+        docker.enviroment() {
+            VOLUME = '$(pwd)/sources:/src'
+            IMAGE = 'cdrx/pyinstaller-linux:python2'
+        }
+        docker.dir('path: env.BUILD_ID') {
+            unstash(name: 'compiled-results') 
+            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
+        }
+        docker.post() {
+            archiveArtifacts "${env.BUILD_ID}/sources/dist/add2vals" 
+            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
         }
     }
 }
