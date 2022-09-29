@@ -7,8 +7,13 @@ node {
     }
     stage('Test') {
         docker.image('qnib/pytest').inside {
-sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
         }
-        
     }
+    stage('Deploy') {
+        docker.image('cdrx/pyinstaller-linux:python2').inside {
+            sh 'pyinstaller --onefile sources/add2vals.py'
+        }
+    }
+
 }
