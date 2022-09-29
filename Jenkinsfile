@@ -11,7 +11,7 @@ node {
     }
     stage('Deliver') {
         docker.image('qnib/pytest').inside {
-            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"
+            sh "docker run --rm -v $(pwd)/sources:/src cdrx/pyinstaller-linux:python2 'pyinstaller -F add2vals.py'"
         }
     }
 }
