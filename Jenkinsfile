@@ -13,8 +13,9 @@ node {
         docker.environment().inside{
             VOLUME = '$(pwd)/sources:/src'
             IMAGE = 'cdrx/pyinstaller-linux:python2'
-        }.docker.step().inside{
-            sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'"  
+        }.docker.step('path: env.BUILD_ID').inside{
+           unstash(name: 'compiled-results') 
+           sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
         }
     }
 }
