@@ -12,8 +12,8 @@ node {
     }
 
     stage('Deliver') {
-        docker.VOLUME('$(pwd)/sources:/src').image('cdrx/pyinstaller-linux:python2').dir(path: env.BUILD_ID) {
-           sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
+        docker.VOLUME('$(pwd)/sources:/src').image('cdrx/pyinstaller-linux:python2') {
+           echo 'build'
         }
     }
 }
