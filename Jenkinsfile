@@ -1,9 +1,8 @@
 pipeline {
     agent none
-     options {
-            skipStagesAfterUnstable()
-     }
-            
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
         stage('Build') {
             agent {
@@ -13,6 +12,7 @@ pipeline {
             }
             steps {
                 sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+                stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
         stage('Test') {
@@ -22,7 +22,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
@@ -38,6 +38,7 @@ pipeline {
             }
             steps {
                 dir(path: env.BUILD_ID) { 
+                    unstash(name: 'compiled-results') 
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
                 }
             }
@@ -47,6 +48,6 @@ pipeline {
                     sh "docker run --rm -v ${VOLUME} ${IMAGE} 'rm -rf build dist'"
                 }
             }
-            }
         }
+    }
 }
