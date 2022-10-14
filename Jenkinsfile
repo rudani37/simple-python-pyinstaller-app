@@ -15,8 +15,5 @@ node {
        def VOLUME = '$(pwd)/sources:/src'
        def IMAGE = 'cdrx/pyinstaller-linux:python2'
 
-        docker.dir(path: env.BUILD_ID).inside {
-           sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F add2vals.py'" 
-        }
     }
 }
