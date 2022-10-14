@@ -12,6 +12,8 @@ node {
     }
 
     stage('Deliver') {
-       echo 'build'
+        docker.VOLUME('$(pwd)/sources:/src').image('cdrx/pyinstaller-linux:python2').inside {
+           echo 'build'
+        }
     }
 }
