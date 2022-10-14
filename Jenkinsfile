@@ -13,9 +13,8 @@ node {
 
     stage('Deliver') {
         
-        docker.environment().inside{
-            VOLUME = '$(pwd)/sources:/src'
-            IMAGE = 'cdrx/pyinstaller-linux:python2'
+         docker.image('cdrx/pyinstaller-linux:python2').inside('$(pwd)/sources:/src') {
+            sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
         }
     }
 }
