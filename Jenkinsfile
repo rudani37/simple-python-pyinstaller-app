@@ -11,8 +11,10 @@ node {
         }
     }
     stage('Deploy') {
-            sh 'docker run --rm -v /var/jenkins_home/workspace/submission-cicd-pipeline-rudani/sources:/src cdrx/pyinstaller-linux:python2 \'pyinstaller -F add2vals.py\''
-            archiveArtifacts artifacts: 'sources/add2vals.py'
-            sleep 60
+           checkout scm
+        sh 'docker run --rm -v /var/jenkins_home/workspace/submission-cicd-pipeline-wilson_oey/sources:/src cdrx/pyinstaller-linux:python2 \'pyinstaller -F add2vals.py\''
+        archiveArtifacts artifacts: 'sources/add2vals.py', followSymlinks: false
+        sh 'docker run --rm -v /var/jenkins_home/workspace/submission-cicd-pipeline-wilson_oey/sources:/src cdrx/pyinstaller-linux:python2 \'rm -rf build dist\''
+        sleep time: 1, unit: 'MINUTES'
     }
 }
