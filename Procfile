@@ -1,1 +1,1 @@
-web: python sources/test_calc.py
+web: python sources/add2vals.py
