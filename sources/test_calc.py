@@ -1,5 +1,6 @@
 import unittest
 import calc
+import os
 
 class TestCalc(unittest.TestCase):
     """
@@ -45,4 +46,5 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(result, 'abc5.5')
 
 if __name__ == '__main__':
-    unittest.main()
+    port = int(os.environ.get('PORT', 5000))
+    unittest.run(host='0.0.0.0', port=port, debug=True)
