@@ -1,1 +1,1 @@
-web: python sources/calc.py  :$PORT app:app
+web: python sources/calc.py  runserver 0.0.0.0:5000
