@@ -1,1 +1,1 @@
-web: python sources/test_calc.py runserver 0.0.0.0:5000
+web: gunicorn gettingstarted.wsgi
