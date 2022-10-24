@@ -1,1 +1,1 @@
-web: python sources/test_calc.py :$PORT app:app
+web: python sources/test_calc.py
