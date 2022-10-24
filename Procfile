@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT app:APP
+web: python sources/test_calc.py
