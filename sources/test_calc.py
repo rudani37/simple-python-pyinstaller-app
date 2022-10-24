@@ -45,4 +45,8 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(result, 'abc5.5')
 
 if __name__ == '__main__':
-    unittest.main()
+     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gettingstarted.settings")
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(sys.argv)
